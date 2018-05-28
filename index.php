@@ -2,7 +2,7 @@
 
     $bot_token = "618572383:AAGzsmzntRDrktR_FLdUFCS6wgU-WZsvbJA";
     $chat_id = "-1001385149154"; //Trading Desk Signals chat id
-    $url = "https://api.telegram.org/bot$bot_token/sendmessage?chat_id=$chat_id&text=";
+    $url = "https://api.telegram.org/bot$bot_token/sendmessage?"; //chat_id=$chat_id&text=
 
     $channel1 = "1175987244"; // Cindicator Bot Owners (feed) channel
 
@@ -24,10 +24,13 @@
                 $i++;
                 print "*************************$i th******************************\n";
                 $data = json_decode($s, true);
-                print $s;
                 if ($data["from"]["peer_id"] == $channel1 && $data["id"] != $old_id) {
-                    print($data["text"]);
-                    file_get_contents($url . $data["text"]);
+                    print $data["text"];
+                    $options = array(
+                        'chat_id' => $chat_id,
+                        'text' => $data["text"]
+                    );
+                    file_get_contents($url . http_build_query($options));
                     $old_id = $data["id"];
                 }
             }
