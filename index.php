@@ -16,13 +16,11 @@
     flush();
     $process = proc_open($cmd, $descriptorspec, $pipes, realpath('./'), array());
 
-    $i = 0;
     $old_id = "";
     if (is_resource($process)) {
         while ($s = fgets($pipes[1])) {
             if (substr($s, 0, 1) == "{") {
-                $i++;
-                print "*************************$i th******************************\n";
+                print "\n**************************new message********************************\n";
                 $data = json_decode($s, true);
                 if ($data["from"]["peer_id"] == $channel1 && $data["id"] != $old_id) {
                     print $data["text"];
